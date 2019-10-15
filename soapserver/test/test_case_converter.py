@@ -6,13 +6,13 @@ class CaseConverterTest(unittest.TestCase):
         pass
 
     def test_case_converter_converts_to_uppercase(self):
-        actual = cc.convertCase("hello", cc.Convert.toUpper)
+        actual = cc.convertCase("hello", cc.Convert.TO_UPPER)
         expected = "HELLO"
 
         self.assertEqual(expected, actual)
 
     def test_case_converter_converts_to_lowercase(self):
-        actual = cc.convertCase("GOODBYE", cc.Convert.toLower)
+        actual = cc.convertCase("GOODBYE", cc.Convert.TO_LOWER)
         expected = "goodbye"
 
         self.assertEqual(expected, actual)

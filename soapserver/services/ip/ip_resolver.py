@@ -3,7 +3,7 @@ import re
 
 def resolveIP(ip):
     # Check IP address
-    if not (validateIp(ip)):
+    if not (validateIP(ip)):
         raise Exception('Invalid IP address')
 
     client = Client("http://ws.cdyne.com/ip2geo/ip2geo.asmx?WSDL")
@@ -18,9 +18,9 @@ def resolveIP(ip):
         result.Longitude
     )
 
-def validateIp(ip):
-    validIp = re.search(r"^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$", ip)
-    return True if validIp else False
+def validateIP(ip):
+    valid_ip = re.search(r"^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$", ip)
+    return True if valid_ip else False
 
 class IPInfo(object):
 

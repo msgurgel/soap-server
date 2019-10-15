@@ -16,17 +16,17 @@ class TextService(ServiceBase):
     @srpc(String, UnsignedInteger, _returns=String)
     def ConvertCase(string, conversionType):
         switcher = {
-            1: cc.Convert.toUpper,
-            2: cc.Convert.toLower
+            1: cc.Convert.TO_UPPER,
+            2: cc.Convert.TO_LOWER
         }
 
         try:
-            enumVal = switcher.get(conversionType)
+            enum_val = switcher.get(conversionType)
         except AttributeError:
             logger.info("Invalid request to 'ConvertCase' – Reason: Invalid conversion type")
             raise InvalidConversionTypeError()
 
-        result = cc.convertCase(string, enumVal)
+        result = cc.convertCase(string, enum_val)
 
         logger.debug("Successful request made to 'ConvertCase'")
         return result

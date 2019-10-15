@@ -20,10 +20,10 @@ class IPResolverTest(unittest.TestCase):
         self.assertEqual("Invalid IP address", the_exception.args[0])
 
     def test_validate_ip_validates(self):
-        valid_actual = ipr.validateIp("192.168.0.1")
+        valid_actual = ipr.validateIP("192.168.0.1")
         valid_expected = True
 
-        invalid_actual = ipr.validateIp("bananas")
+        invalid_actual = ipr.validateIP("bananas")
         invalid_expected = False
 
         self.assertEqual(valid_expected, valid_actual)

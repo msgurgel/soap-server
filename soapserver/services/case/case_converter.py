@@ -1,8 +1,8 @@
 from enum import Enum
 
 class Convert(Enum):
-    toUpper = 0
-    toLower = 1
+    TO_UPPER = 0
+    TO_LOWER = 1
 
 def convertCase(string, conversion):
 

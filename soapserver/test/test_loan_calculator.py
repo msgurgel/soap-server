@@ -13,5 +13,12 @@ class LoanCalculatorTest(unittest.TestCase):
 
         self.assertEqual(expected, actual)
 
+    def test_loan_payment_throws_excep_when_payments_is_zero(self):
+        with self.assertRaises(Exception) as e:
+            lc.loanPayment(150000, 8 / 1200, 0)
+
+        the_exception = e.exception
+        self.assertEqual("Payments cannot be zero", the_exception.args[0])
+
 if __name__ == '__main__':
     unittest.main()

@@ -12,5 +12,23 @@ class IPResolverTest(unittest.TestCase):
 
         self.assertDictEqual(expected.__dict__, actual.__dict__)
 
+    def test_resolve_ip_doesnt_die_with_invalid_ip(self):
+        with self.assertRaises(Exception) as e:
+            ipr.resolveIP("bananas")
+
+        the_exception = e.exception
+        self.assertEqual("Invalid IP address", the_exception.args[0])
+
+    def test_validate_ip_validates(self):
+        valid_actual = ipr.validateIp("192.168.0.1")
+        valid_expected = True
+
+        invalid_actual = ipr.validateIp("bananas")
+        invalid_expected = False
+
+        self.assertEqual(valid_expected, valid_actual)
+        self.assertEqual(invalid_expected, invalid_actual)
+
+
 if __name__ == '__main__':
     unittest.main()

@@ -1,8 +1,12 @@
 from zeep import Client
+import re
 
 def resolveIP(ip):
-    client = Client("http://ws.cdyne.com/ip2geo/ip2geo.asmx?WSDL")
+    # Check IP address
+    if not (validateIp(ip)):
+        raise Exception('Invalid IP address')
 
+    client = Client("http://ws.cdyne.com/ip2geo/ip2geo.asmx?WSDL")
     result = client.service.ResolveIP(ip, 0)
 
     return IPInfo(
@@ -13,6 +17,10 @@ def resolveIP(ip):
         result.Latitude,
         result.Longitude
     )
+
+def validateIp(ip):
+    validIp = re.search(r"^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$", ip)
+    return True if validIp else False
 
 class IPInfo(object):
 

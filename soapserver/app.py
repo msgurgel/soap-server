@@ -15,5 +15,5 @@ def run(serverType):
     logging.info("listening to http://127.0.0.1:8000")
     logging.info("wdsl is at: http://localhost:8000/?wsdl")
 
-    server = make_server('127.0.0.1', 8000, wsgi_app)
+    server = make_server('0.0.0.0', 80, wsgi_app)
     server.serve_forever()

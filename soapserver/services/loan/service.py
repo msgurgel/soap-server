@@ -1,5 +1,6 @@
 import logging
 logger = logging.getLogger(__name__)
+logger.setLevel(logging.DEBUG)
 
 from spyne.decorator import srpc
 from spyne.service import ServiceBase

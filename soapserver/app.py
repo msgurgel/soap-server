@@ -3,7 +3,7 @@ import logging
 from wsgiref.simple_server import make_server
 from soapserver.service_getter import getWsgiApp
 
-def run(serverType):
+def run(serverType, port):
     wsgi_app = getWsgiApp(serverType)
 
     # Setup logger
@@ -12,8 +12,8 @@ def run(serverType):
     logging.getLogger('spyne.protocol.xml').setLevel(logging.DEBUG)
     logging.getLogger('spyne.application.client').setLevel(logging.CRITICAL)
 
-    logging.info("listening to http://127.0.0.1:8000")
-    logging.info("wdsl is at: http://localhost:8000/?wsdl")
+    logging.info("listening to http://127.0.0.1:%d" % port)
+    logging.info("wdsl is at: http://localhost:%d/?wsdl" % port)
 
-    server = make_server('127.0.0.1', 8000, wsgi_app)
+    server = make_server('127.0.0.1', port, wsgi_app)
     server.serve_forever()

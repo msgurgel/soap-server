@@ -1,6 +1,9 @@
-import logging
-logger = logging.getLogger(__name__)
-logger.setLevel(logging.DEBUG)
+from soapserver.lib.logphant import logphant
+from soapserver import config
+
+token = config.readVal('logphant', 'token')
+log_port = config.readVal('logphant', 'port')
+logger = logphant.Logger(log_port, token)
 
 from spyne.decorator import srpc
 from spyne.service import ServiceBase
@@ -22,13 +25,15 @@ class TextService(ServiceBase):
         }
 
         if switcher.get(conversionType, -1) == -1:
-            logger.info("Invalid request to 'ConvertCase' – Reason: Invalid conversion type")
+            logger.log("info", "invalid request to 'ConvertCase' – Reason: invalid conversion type – Value: conversionType = %s" % conversionType)
             raise InvalidConversionTypeError()
 
         enum_val = switcher.get(conversionType)
         result = cc.convertCase(string, enum_val)
 
-        logger.debug("Successful request made to 'ConvertCase'")
+
+        logger.log("debug", "Successful request made to 'ConvertCase'")
+
         return result
 
 class InvalidConversionTypeError(Fault):

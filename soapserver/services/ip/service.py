@@ -1,6 +1,9 @@
-import logging
-logger = logging.getLogger(__name__)
-logger.setLevel(logging.DEBUG)
+from soapserver.lib.logphant import logphant
+from soapserver import config
+
+token = config.readVal('logphant', 'token')
+log_port = config.readVal('logphant', 'port')
+logger = logphant.Logger(log_port, token)
 
 from spyne.decorator import srpc
 from spyne.service import ServiceBase
@@ -35,9 +38,9 @@ class ResolveIP(ServiceBase):
     def GetInfo(ipAddr):
         try:
             ipInfo = ipr.resolveIP(ipAddr)
-            logger.debug("Successful request to 'GetInfo'")
+            logger.log("debug", "Successful request made to 'GetInfo'")
         except Exception as e:
-            logger.info("Invalid request to 'GetInfo' – Reason: %s" % e.args[0])
+            logger.log("info", "invalid request to 'GetInfo' – Reason: %s – Value: ipAddr = %s" % e.args[0], ipAddr)
             raise InvalidIPAddress(e.args[0])
 
         return IpInfo (

@@ -1,6 +1,9 @@
-import logging
-logger = logging.getLogger(__name__)
-logger.setLevel(logging.DEBUG)
+from soapserver.lib.logphant import logphant
+from soapserver import config
+
+token = config.readVal('logphant', 'token')
+log_port = config.readVal('logphant', 'port')
+logger = logphant.Logger(log_port, token)
 
 from spyne.decorator import srpc
 from spyne.service import ServiceBase
@@ -23,8 +26,8 @@ class VinniesLoanService(ServiceBase):
     def LoanPayment(principle, rate, payments):
         try:
             result = lc.loanPayment(principle, rate, payments)
-            logger.debug("Successful request to 'LoanPayment'")
+            logger.log("debug", "Successful request made to 'LoanPayment'")
             return result
         except Exception as e:
-            logger.info("Invalid request to 'LoanPayment' – Reason: Payment is equal to zero.")
+            logger.log("info", "invalid request to 'LoanPayment' – Reason: payment is equal to zero – Values: principle = %s, rate = %s, payments = %s" % principle, rate, payments)
             raise PaymentsIsEqualToZeroError()

@@ -21,12 +21,11 @@ class TextService(ServiceBase):
             2: cc.Convert.TO_LOWER
         }
 
-        try:
-            enum_val = switcher.get(conversionType)
-        except AttributeError:
+        if switcher.get(conversionType, -1) == -1:
             logger.info("Invalid request to 'ConvertCase' – Reason: Invalid conversion type")
             raise InvalidConversionTypeError()
 
+        enum_val = switcher.get(conversionType)
         result = cc.convertCase(string, enum_val)
 
         logger.debug("Successful request made to 'ConvertCase'")
